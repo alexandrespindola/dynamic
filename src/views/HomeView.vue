@@ -1,18 +1,38 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class="flex flex-col gap-10">
+    <h1 class="text-center">Users list</h1>
+    <div class="flex flex-row gap-10 justify-center">
+      <button @click="handleLayout(ListLayout)" class="btn">List</button>
+      <button @click="handleLayout(CardLayout)" class="btn">Cards</button>
+      <button @click="handleLayout(TableLayout)" class="btn">Table</button>
+    </div>
+    <component :is="layout" :content="users" class="text-center" />
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script lang="ts" setup>
+import { ref, defineAsyncComponent, type Component } from 'vue'
 
-export default defineComponent({
-  name: 'HomeView',
-  components: {
-    HelloWorld,
-  },
-});
+const ListLayout = defineAsyncComponent(() => import('@/layouts/ListLayout.vue'))
+const CardLayout = defineAsyncComponent(() => import('@/layouts/CardLayout.vue'))
+const TableLayout = defineAsyncComponent(() => import('@/layouts/TableLayout.vue'))
+
+const layout = ref<Component>(ListLayout)
+
+const handleLayout = (cmp: Component) => layout.value = cmp
+
+const users = ref([
+  { name: 'John', age: 25, position: 'frontend' },
+  { name: 'Jane', age: 24, position: 'backend' },
+  { name: 'Jack', age: 26, position: 'fullstack' },
+  { name: 'Ana', age: 41, position: 'frontend' },
+  { name: 'Roberto', age: 53, position: 'backend' },
+  { name: 'Maria', age: 35, position: 'fullstack' },
+])
 </script>
+
+<style lang="css" scoped>
+.btn {
+  @apply bg-blue-700 text-white font-bold py-2 px-4 rounded;
+}
+</style>
