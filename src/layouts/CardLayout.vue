@@ -1,8 +1,8 @@
 <template>
-        <h1 class="text-center">Component Card</h1>
-        <div class="conteiner">
-            <UserCard v-for="item in props.content" :key=item.name :content="item" />
-        </div>
+    <h1 class="text-center">Component Card</h1>
+    <div class="conteiner">
+        <UserCard v-for="item in props.content" :key=item.name :content="item" />
+    </div>
 </template>
 
 <script lang="ts" setup>
